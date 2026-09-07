@@ -1,0 +1,15 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Next.js 16 exige Node.js >= 20.9. Sans cette variable, l'image de build
+  # de Netlify peut utiliser une version par défaut plus ancienne (ex. 18),
+  # ce qui fait échouer `npm install`/`next build` (EBADENGINE) et laisse
+  # Netlify continuer à servir le DERNIER déploiement réussi précédent —
+  # potentiellement une version du site antérieure à l'ajout de /admin,
+  # ce qui produit exactement un 404 sur /admin sans toucher au reste du site.
+  NODE_VERSION = "20.9.0"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
